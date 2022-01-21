@@ -1,29 +1,33 @@
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, Platform, SafeAreaView, StatusBar } from 'react-native';
-
-const isAndroid = Platform.OS === "android";
+import { ThemeProvider } from "styled-components/native";
+import {
+  useFonts as useDongle,
+  Dongle_300Light,
+  Dongle_400Regular,
+  Dongle_700Bold
+} from "@expo-google-fonts/dongle";
+import styled from "styled-components/native";
+import theme from './src/config/theme';
+import LandingScreen  from './src/screens/langing.screen';
 
 const App = () => {
+  const [dongleLoaded] = useDongle({
+    Dongle_300Light,
+    Dongle_400Regular,
+    Dongle_700Bold
+  });
+
+  if (!dongleLoaded) {
+    return null;
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <ExpoStatusBar style="light" backgroundColor="purple"/>
-      <Text style={styles.text}>Page content</Text>
-    </SafeAreaView>
+    <ThemeProvider theme={theme}>
+      <StatusBar style="light" backgroundColor={theme.color.bg.secondary} />
+      <LandingScreen />
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: !isAndroid ? 0 : StatusBar.currentHeight,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  text: {
-    fontSize: 25,
-    fontWeight: '500'
-  }
-});
 
 export default App;

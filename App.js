@@ -4,6 +4,8 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 
+import Home from './screens/Home';
+
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -55,7 +57,7 @@ export default function App() {
     >
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <Text style={styles.label}>Open up App.js to start working on your app!</Text>
+          <Home />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

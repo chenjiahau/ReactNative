@@ -1,18 +1,34 @@
+import 'react-native-gesture-handler';
+
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 
 import Home from './screens/Home';
+import ColorDetail from './screens/ColorDetail';
 
 SplashScreen.preventAutoHideAsync();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [appIsLoaded, setAppIsLoaded] = useState(false);
 
-  useEffect(() => {
+  const AppTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#ffffff',
+    },
+  };
 
+  useEffect(() => {
     const prepare = async () => {
       try {
         await Font.loadAsync({
@@ -55,11 +71,12 @@ export default function App() {
     <SafeAreaProvider
       onLayout={onLayout}
     >
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <Home />
-        </View>
-      </SafeAreaView>
+      <NavigationContainer theme={AppTheme}>
+        <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: true }}>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="ColorDetail" component={ColorDetail} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }

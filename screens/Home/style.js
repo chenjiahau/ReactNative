@@ -28,6 +28,7 @@ const style = StyleSheet.create({
   colorContainer: {
     flex: 1,
     marginHorizontal: 16,
+    marginVertical: 16,
   }
 });
 
